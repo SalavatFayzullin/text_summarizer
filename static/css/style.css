@@ -1,0 +1,148 @@
+/* Глобальные стили */
+:root {
+    --primary-color: #3498db;
+    --secondary-color: #2980b9;
+    --background-color: #f5f7fa;
+    --text-color: #333;
+    --light-grey: #ecf0f1;
+    --border-color: #dfe6e9;
+    --success-color: #2ecc71;
+    --error-color: #e74c3c;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+h1 {
+    color: var(--primary-color);
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+h2 {
+    color: var(--secondary-color);
+    margin-bottom: 1rem;
+}
+
+.description {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+}
+
+/* Макет формы */
+.form-container {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+@media (max-width: 768px) {
+    .form-container {
+        flex-direction: column;
+    }
+}
+
+.input-container, .output-container {
+    flex: 1;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+}
+
+/* Элементы ввода */
+textarea {
+    width: 100%;
+    min-height: 300px;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    padding: 1rem;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    resize: vertical;
+}
+
+.controls {
+    display: flex;
+    gap: 1rem;
+}
+
+button {
+    padding: 0.8rem 1.5rem;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: var(--secondary-color);
+}
+
+#clear-btn {
+    background-color: #95a5a6;
+}
+
+#clear-btn:hover {
+    background-color: #7f8c8d;
+}
+
+/* Контейнер вывода */
+#summary-result {
+    min-height: 300px;
+    padding: 1rem;
+    background-color: var(--light-grey);
+    border-radius: 5px;
+    white-space: pre-wrap;
+    overflow-y: auto;
+}
+
+.hidden {
+    display: none;
+}
+
+#loading {
+    text-align: center;
+    padding: 1rem;
+    color: var(--secondary-color);
+    font-style: italic;
+}
+
+.error {
+    color: var(--error-color);
+    padding: 0.5rem;
+    border-left: 3px solid var(--error-color);
+}
+
+/* Информационная секция */
+.info {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+}
+
+.info h3 {
+    color: var(--secondary-color);
+    margin-bottom: 0.5rem;
+} 

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Абстрактивное резюмирование текста</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Абстрактивное резюмирование текста</h1>
+        <p class="description">
+            Эта система использует современные языковые модели для создания 
+            качественных абстрактивных резюме. Модель "переписывает" 
+            входной текст своими словами, сохраняя основной смысл и важные детали.
+        </p>
+        
+        <div class="form-container">
+            <div class="input-container">
+                <h2>Входной текст</h2>
+                <textarea id="input-text" placeholder="Вставьте текст для резюмирования (минимум 100 символов)"></textarea>
+                <div class="controls">
+                    <button id="summarize-btn">Резюмировать</button>
+                    <button id="clear-btn">Очистить</button>
+                </div>
+            </div>
+            
+            <div class="output-container">
+                <h2>Резюме</h2>
+                <div id="summary-result"></div>
+                <div id="loading" class="hidden">Обработка...</div>
+            </div>
+        </div>
+        
+        <div class="info">
+            <h3>О методе резюмирования</h3>
+            <p>
+                Система использует языковую модель BART через Hugging Face Inference API 
+                для создания абстрактивных резюме. В отличие от экстрактивного резюмирования, 
+                которое просто выбирает важные предложения, абстрактивное резюмирование формулирует 
+                новый текст на основе понимания содержания.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const inputText = document.getElementById('input-text');
+            const summarizeBtn = document.getElementById('summarize-btn');
+            const clearBtn = document.getElementById('clear-btn');
+            const summaryResult = document.getElementById('summary-result');
+            const loading = document.getElementById('loading');
+            
+            summarizeBtn.addEventListener('click', async () => {
+                const text = inputText.value.trim();
+                
+                if (text.length < 100) {
+                    alert('Пожалуйста, введите текст не менее 100 символов');
+                    return;
+                }
+                
+                // Показать индикатор загрузки
+                loading.classList.remove('hidden');
+                summaryResult.textContent = '';
+                
+                try {
+                    const response = await fetch('/summarize', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ text }),
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (data.error) {
+                        summaryResult.innerHTML = `<div class="error">${data.error}</div>`;
+                    } else {
+                        summaryResult.textContent = data.summary;
+                    }
+                } catch (error) {
+                    summaryResult.innerHTML = `<div class="error">Ошибка: ${error.message}</div>`;
+                } finally {
+                    loading.classList.add('hidden');
+                }
+            });
+            
+            clearBtn.addEventListener('click', () => {
+                inputText.value = '';
+                summaryResult.textContent = '';
+            });
+        });
+    </script>
+</body>
+</html> 
